@@ -1,0 +1,237 @@
+indexing
+slicing
+negative indexing
+string methods
+f-strings (formatted string literals)
+        age = 22
+        print(f"My age is {age}")
+
+print(5 ** 2)  #5 raised to the power 2
+print(10 // 3) #floor division(integer division)
+
+OOP (Object Oriented Programming) is a way of organizing code using:
+
+objects
+classes
+properties (data)
+methods (functions inside class)
+
+//============================================
+class Student:
+    pass
+s1=Student()
+
+self means “This current object.”
+
+class Student:
+
+    def greet(self):
+        print("Hello")
+
+When you do
+s1.greet()
+
+Python internally does:
+Student.greet(s1)
+So self receives the current object automatically.
+//============================================
+class Student:
+
+    def set_data(self, name, age):
+        self.name = name
+        self.age = age
+
+s1 = Student()
+
+s1.set_data("Anushka", 22)
+
+print(s1.name)
+print(s1.age)
+
+//==================CONSTRUCTOR=================
+In Python:
+
+class Student:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+__init__ = constructor.
+
+Runs automatically when object is created.
+//========================AI TERMS=================================
+1) python
+2) NLP in deep learning:
+
+RAG
+LSTM RNN
+GRU RNN to serve NLP usecases
+bidirectional RNN
+encoder
+decoder
+Attention mechanism
+Transformer
+BERT
+Gen AI
+LLM models
+
+3) LangChain gen AI framework
+multimodal
+open source LLM model
+agents, vector databases, chains , retrievers, text summarization, working with chatbots, Langchain core/community/tools, Streamlit library
+4) Deployment techniques
+5)Fine Tuning (Google colab) (LoRA (Low-Rank Adaptation) in AI deployment is a technique for efficiently adapting massive foundation models (like LLMs or diffusion models) to specific tasks without the high cost of full retraining. Instead of modifying the entire base model, LoRA trains a tiny set of extra parameters called "adapters" while keeping the original model frozen.)
+LoRA , CLARA, Quantization
+6)Gen AI in AWS: AWS bedrock, lamda function, API gateway, deploy on AWS Sagemaker
+7)Nvidia Nim
+8)CrewAI to make multi Ai agents:
+llm and multimodels:
+	1)Google -> gemma, gemini 2
+	2)Meta -> Llama 3, codelama
+	3)Anthropic -> Mistral
+	4)Open AI-> GPT 4.0, GPT turbo 4,Open AI embedding 
+
+/=========================================================
+The problem is:
+
+Suppose you have two files.
+
+math_utils.py
+def add(a, b):
+    return a + b
+
+def main():
+    print(add(5, 3))
+
+main()
+
+
+app.py
+import math_utils
+
+print("Finished")
+
+Now run:
+python app.py
+
+What do you expect?
+
+Maybe:
+Finished
+
+But the output is:
+8
+Finished
+
+Why?
+
+Because when Python imports math_utils, it executes the entire file from top to bottom, including:
+
+main()
+
+This is usually not what you want.
+
+Python's solution: __name__
+
+Every Python file automatically gets a special variable called:
+__name__
+
+Two Possibilities:
+
+1. If you run the file directly:
+__name__ = "__main__"
+
+2. If the file is imported:
+__name__ = "filename" (without .py)
+Example:
+
+# math_utils.py
+
+def add(a, b):
+    return a + b
+
+def main():
+    print(add(5, 3))
+
+print("DEBUG:", __name__)
+
+if __name__ == "__main__":
+    main()          # Only runs when you execute this file directly
+Output when running python math_utils.py:
+
+DEBUG: __main__
+8
+Output when running python app.py (which imports math_utils):
+
+DEBUG: math_utils    # The if-block is skipped! 
+
+//==================================================
+Your computer already has:
+
+C:\Python313\python.exe
+
+But the virtual environment also contains:
+
+MyProject\.venv\Scripts\python.exe
+
+So now there are two Python interpreters.
+
+The activate file in Scripts is not Python code that your program uses. It's a small script whose only job is to tell your terminal to start using the virtual environment.
+
+
+//=====================================================
+Why your editor says "Python is not installed"
+Even though Python is installed on your computer (located at C:\Users\DELL\AppData\Local\Programs\Python\Python314\python.exe), you saw this warning for two reasons:
+
+Different Extensions:
+.ipynb (Notebooks) are run by the Jupyter Extension in your editor, which automatically finds and connects to an available Python kernel.
+.py (Scripts) are handled by the core Python Extension. When you opened a .py file for the first time, the Python extension activated and realized no default Python interpreter was selected for standard scripts.
+
+The difference between .ipynb and .py
+Feature	.py (Python Script)	.ipynb (Jupyter Notebook)
+Format	Plain Text: Contains only raw Python code.	JSON: A structured file containing code, Markdown, cell metadata, and embedded outputs.
+Execution	Top-to-Bottom: The entire file runs sequentially from start to finish.	Cell-by-Cell: You can run individual code blocks (cells) interactively and out of order.
+State Memory	Ephemeral: Variables and imports are lost as soon as the script finishes running.	Persistent: The state (variables, memory) is kept active as long as the notebook kernel is running.
+Outputs	External: Outputs are printed only to the terminal/console or saved to separate files.	Inline / Embedded: Visualizations, tables, images, and print outputs are saved right inside the file.
+Best Used For	Production code, web servers, automation scripts, and reusable modules/libraries.	Exploratory data analysis, quick prototyping, data visualization, and learning/tutorials.
+
+
+//==================================================
+You don't see the contents because zip() returns a zip object (an iterator), not a list.
+
+
+//==================================================
+If you're learning the latest LangChain, there is now a newer, provider-agnostic way to initialize chat models instead of directly using ChatOpenAI.
+
+Instead of:
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4.1-mini",
+    temperature=0
+)
+
+you can use init_chat_model().
+
+from langchain.chat_models import init_chat_model
+
+llm = init_chat_model(
+    "gpt-4.1-mini",
+    model_provider="openai"
+)
+
+Why was init_chat_model() introduced?
+
+Previously, every provider had its own class:
+
+ChatOpenAI(...)
+ChatAnthropic(...)
+ChatGoogleGenerativeAI(...)
+ChatGroq(...)
+ChatOllama(...)
+
+Your code depended on the provider you were using.
+
+With init_chat_model(), LangChain gives you one common interface for all providers.
